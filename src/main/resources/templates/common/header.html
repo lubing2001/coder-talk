@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <body>
+        <div th:fragment="header">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+
+                        <a class="navbar-brand" th:href="@{/}">猿圈说</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav ">
+                            <li ><a th:href="@{/index}">首页</a></li>
+                            <li><a th:href="@{'/diary/'+${loginUser.id}}" th:if="${loginUser != null}">生活点滴</a></li>
+                            <li><a th:href="@{'/user/commentboard/'+${loginUser.id}}" th:if="${loginUser != null}">留言板</a>
+                            <li><a th:href="@{/blog/add}" th:if="${loginUser != null}">发布博客</a></li>
+
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown" th:if="${loginUser != null}" >
+                                <a href="#" class="dropdown-toggle glyphicon glyphicon-bell" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
+                                    <span class="badge" th:text="${allUnreadCount}" style="margin-bottom: 10px;margin-right: -10px">42</span>
+                                </a>
+                                <ul class="dropdown-menu" >
+                                    <li><a th:href="@{/letter/list}" th:if="${loginUser != null}">朋友私信 <span class="badge" th:text="${letterUnreadCount}">42</span></a></li>
+                                    <li><a th:href="@{/notice/list}" th:if="${loginUser != null}">系统通知 <span class="badge" th:text="${noticeUnreadCount}">42</span></a></li>
+                                </ul>
+                            </li>
+
+                            <li><a th:href="@{/login}" th:if="${loginUser == null}">登录</a></li>
+                            <li><a th:href="@{/register}" th:if="${loginUser == null}">注册</a></li>
+                            <li class="dropdown" th:if="${loginUser != null}" >
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
+                                    <img th:src="@{${loginUser.headerUrl}}" class="img-rounded " style="height: 25px;width: 25px"/>
+                                </a>
+                                <ul class="dropdown-menu" >
+                                    <li><a th:href="@{'/user/profile/'+${loginUser.id}}">个人主页</a></li>
+                                    <li><a th:href="@{/user/setting}">账号设置</a></li>
+                                    <li><a th:href="@{/logout}">退出登录</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a th:utext="${loginUser.username}">用户名</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+        </div>
+    </body>
+
+</html>
